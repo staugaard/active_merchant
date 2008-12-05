@@ -33,6 +33,14 @@ module ActiveMerchant #:nodoc:
            'phone'      => nil
         }
       end
+      
+      def profile_id
+        @params['profile_id']
+      end
+      
+      def profile_status
+        @params['profile_status']
+      end
     end
   end
 end
