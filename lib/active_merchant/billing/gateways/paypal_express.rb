@@ -201,7 +201,7 @@ module ActiveMerchant #:nodoc:
               
               xml.tag! 'n2:RecurringPaymentsProfileDetails' do
                 xml.tag! 'n2:SubscriberName', options[:subscriber_name] unless options[:subscriber_name].blank?
-                xml.tag! 'n2:BillingStartDate', (options[:start_date] || Time.now).utc.iso8601
+                xml.tag! 'n2:BillingStartDate', (options[:start_date] || Time.now).to_time.utc.iso8601
                 xml.tag! 'n2:ProfileReference', options[:reference] unless options[:reference].blank?
               end
               
@@ -211,6 +211,7 @@ module ActiveMerchant #:nodoc:
                   xml.tag! 'n2:BillingPeriod', options[:period].to_s.camelize
                   xml.tag! 'n2:BillingFrequency', options[:frequency].blank? ? 1 : options[:frequency].to_i
                   xml.tag! 'n2:Amount', amount(money), 'currencyID' => currency_code
+                  xml.tag! 'n2:TaxAmount', amount(options[:tax]), 'currencyID' => currency_code if options[:tax]
                 end
                 xml.tag! 'n2:MaxFailedPayments', options[:max_failed_payments] unless options[:max_failed_payments].blank?
               end
